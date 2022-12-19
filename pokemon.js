@@ -1,27 +1,26 @@
 //working on getting type 13:31
 
 const poke_container = document.getElementById("poke_container");
-const pokemon_number = 150;
+const pokemon_number = 152;
 const colors = {
   bug: "#f8d5a3",
   dark: "#",
   dragon: "#97b3e6",
-  electric: "#FCF7DE",
+  electric: "#fbfd9e",
   fairy: "#fceaff",
   fighting: "#E6E0D4",
-  fire: "#FDDFDF",
+  fire: "#e69598",
   flying: "#c1e0e0",
-  ghost: "#",
-  grass: "#DEFDE0",
-  ground: "#f4e7da",
-  ice: "#",
+  ghost: "#a48bbf",
+  grass: "#ccff99",
+  ground: "#e1d5b1",
+  ice: "#b4cffa",
   normal: "#F5F5F5",
-  poison: "#89d7a5",
-  psychic: "#eaeda1",
-  rock: "#d5d5d4",
+  poison: "#999FFF",
+  psychic: "#f2aee4",
+  rock: "#ecd07c",
   steel: "#",
-  water: "#DEF3DF",
-
+  water: "#99ccff",
 };
 
 const main_types = Object.keys(colors);
@@ -46,20 +45,34 @@ function createPokemonCard(pokemon) {
   pokemonEl.classList.add("pokemon");
 
   const poke_types = pokemon.types.map((el) => el.type.name);
-  const type = main_types.find((type) => poke_types.indexOf(type) > -1);
+  const type1 = main_types.find((type) => poke_types.indexOf(type) > -1);
+  const type2 = main_types.find(
+    (type) => poke_types.indexOf(type) > -1 && type != type1
+  );
+
+  let type = type1;
+  if (type2) {
+    type = type1 + " / " + type2;
+  }
 
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
   const id = pokemon.id;
-  const color = colors[type];
-  console.log(color);
+  const primaryColor = colors[type1];
+  let secondaryColor = colors[type2];
+  if (!secondaryColor) {
+    secondaryColor = 'darkgray';
+  }
+ 
 
-  pokemonEl.style.backgroundColor = color;
+  pokemonEl.style.backgroundColor = primaryColor;
 
   const pokeInnerHTML =
     '<div class="img-container"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' +
     id +
-    '.png"></div><div class="info"> <span class="number">#' +
-    id.toString().padStart(3, '0') +
+    '.png" style="border: 5px solid ' +
+    secondaryColor +
+    '"></div><div class="info"> <span class="number">#' +
+    id.toString().padStart(3, "0") +
     '</span><h3 class="name">' +
     name +
     '</h3><small class="type">Type: <span>' +
@@ -68,7 +81,7 @@ function createPokemonCard(pokemon) {
 
   //pokemondb.net/pokedex/bulbasaur
 
-  https: pokemonEl.innerHTML = pokeInnerHTML;
+  pokemonEl.innerHTML = pokeInnerHTML;
 
   poke_container.appendChild(pokemonEl);
 }

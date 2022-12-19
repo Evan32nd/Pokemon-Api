@@ -1,6 +1,11 @@
 body {
 background-color: lightyellow;
 }
+h1 {
+    color: red;
+    border-bottom: 5px solid rgba(49, 30, 30, 0.8);
+    text-align: center;
+}
 .poke-container {
     display: flex;
     flex-wrap: wrap;
